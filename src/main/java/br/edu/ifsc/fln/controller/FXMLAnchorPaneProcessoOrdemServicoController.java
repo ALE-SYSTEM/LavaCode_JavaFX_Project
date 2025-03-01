@@ -37,18 +37,12 @@ public class FXMLAnchorPaneProcessoOrdemServicoController implements Initializab
     private Veiculo veiculo;
 
     private final Database database = DatabaseFactory.getDatabase("mysql");
-    private final Connection connection;
+    private final Connection connection = database.conectar();
     private final ModeloDAO modeloDAO = new ModeloDAO();
     private final CorDAO corDAO = new CorDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
 
-    {
-        try {
-            connection = database.conectar();
-        } catch (SQLException e) {
-            throw new RuntimeException("Falha ao estabelecer conexão com o banco de dados: " + e.getMessage(), e);
-        }
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

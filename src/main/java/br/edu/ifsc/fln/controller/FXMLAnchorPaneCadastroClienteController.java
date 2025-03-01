@@ -31,7 +31,7 @@ public class FXMLAnchorPaneCadastroClienteController implements Initializable {
 
     @FXML private TableView<Cliente> tableViewCliente;
     @FXML private TableColumn<Cliente, Integer> tableColumnClienteId;
-    @FXML private TableColumn<Cliente, String> tableColumnClienteNome;
+    @FXML private TableColumn<Cliente, String> tableColumnCliente;
     @FXML private TableColumn<Cliente, String> tableColumnClienteCelular;
     @FXML private TableColumn<Cliente, String> tableColumnClienteCpfCnpj;
     @FXML private Button btInserir;
@@ -58,25 +58,25 @@ public class FXMLAnchorPaneCadastroClienteController implements Initializable {
     }
 
     public void carregarTableViewCliente() throws SQLException {
-        tableColumnClienteId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnClienteNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tableColumnClienteCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
-        tableColumnClienteCpfCnpj.setCellValueFactory(cellData -> {
-            Cliente cliente = cellData.getValue();
-            if (cliente instanceof PessoaFisica) {
-                return new javafx.beans.property.SimpleStringProperty(((PessoaFisica) cliente).getCpf());
-            } else if (cliente instanceof PessoaJuridica) {
-                return new javafx.beans.property.SimpleStringProperty(((PessoaJuridica) cliente).getCnpj());
-            }
-            return new javafx.beans.property.SimpleStringProperty("");
-        });
-
-        if (clienteDAO.getConnection() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Falha ao conectar ao banco de dados. Verifique as configurações de conexão.");
-            alert.showAndWait();
-            return;
-        }
+//        tableColumnClienteId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableColumnCliente.setCellValueFactory(new PropertyValueFactory<>("nome"));
+//        tableColumnClienteCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
+//        tableColumnClienteCpfCnpj.setCellValueFactory(cellData -> {
+//            Cliente cliente = cellData.getValue();
+//            if (cliente instanceof PessoaFisica) {
+//                return new javafx.beans.property.SimpleStringProperty(((PessoaFisica) cliente).getCpf());
+//            } else if (cliente instanceof PessoaJuridica) {
+//                return new javafx.beans.property.SimpleStringProperty(((PessoaJuridica) cliente).getCnpj());
+//            }
+//            return new javafx.beans.property.SimpleStringProperty("");
+//        });
+//
+//        if (clienteDAO.getConnection() == null) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("Falha ao conectar ao banco de dados. Verifique as configurações de conexão.");
+//            alert.showAndWait();
+//            return;
+//        }
 
         listaCliente = clienteDAO.listar();
         observableListCliente = FXCollections.observableArrayList(listaCliente);

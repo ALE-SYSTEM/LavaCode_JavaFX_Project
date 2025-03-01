@@ -5,6 +5,8 @@ import br.edu.ifsc.fln.model.domain.ItemOS;
 import br.edu.ifsc.fln.model.domain.OrdemServico;
 import br.edu.ifsc.fln.model.domain.Servico;
 import br.edu.ifsc.fln.model.domain.Veiculo;
+
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;

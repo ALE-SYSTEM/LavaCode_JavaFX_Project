@@ -144,11 +144,12 @@ public class ClienteDAO {
 
         cliente.setId(rs.getInt("id"));
         cliente.setNome(rs.getString("nome"));
-        cliente.setCelular(rs.getString("telefone"));
+        cliente.setCelular(rs.getString("celular"));
         cliente.setEmail(rs.getString("email"));
         cliente.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
         return cliente;
     }
+
 
     public int getClienteAutoID(Cliente cliente) throws SQLException {
         String sql1 = "SELECT max(id) as id FROM cliente";

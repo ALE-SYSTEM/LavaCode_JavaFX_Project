@@ -7,6 +7,7 @@ import br.edu.ifsc.fln.model.domain.Modelo;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -48,13 +49,17 @@ public class FXMLAnchorPaneCadastroModeloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         modeloDAO.setConnection(connection);
-        carregarTableViewModelo();
+        try {
+            carregarTableViewModelo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         tableViewModelo.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> selecionarItemTableViewModelo(newValue));
     }
 
-    public void carregarTableViewModelo() {
+    public void carregarTableViewModelo() throws SQLException {
         tableColumnModeloDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 
         listaModelo = modeloDAO.listar();
@@ -81,7 +86,7 @@ public class FXMLAnchorPaneCadastroModeloController implements Initializable {
     }
 
     @FXML
-    public void handleBtInserir() throws IOException {
+    public void handleBtInserir() throws IOException, SQLException {
         Modelo modelo = new Modelo();
         boolean btConfirmarClicked = showFXMLAnchorPaneCadastroModeloDialog(modelo);
         if (btConfirmarClicked) {
@@ -91,7 +96,7 @@ public class FXMLAnchorPaneCadastroModeloController implements Initializable {
     }
 
     @FXML
-    public void handleBtAlterar() throws IOException {
+    public void handleBtAlterar() throws IOException, SQLException {
         Modelo modelo = tableViewModelo.getSelectionModel().getSelectedItem();
         if (modelo != null) {
             boolean btConfirmarClicked = showFXMLAnchorPaneCadastroModeloDialog(modelo);
@@ -107,7 +112,7 @@ public class FXMLAnchorPaneCadastroModeloController implements Initializable {
     }
 
     @FXML
-    public void handleBtExcluir() throws IOException {
+    public void handleBtExcluir() throws IOException, SQLException {
         Modelo modelo = tableViewModelo.getSelectionModel().getSelectedItem();
         if (modelo != null) {
             modeloDAO.remover(modelo);
